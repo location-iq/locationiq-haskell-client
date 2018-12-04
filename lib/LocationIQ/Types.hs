@@ -27,13 +27,23 @@ data Address = Address
   { addressHouseUnderscorenumber :: Text -- ^ 
   , addressRoad :: Text -- ^ 
   , addressResidential :: Text -- ^ 
+  , addressBorough :: Text -- ^ 
+  , addressNeighbourhood :: Text -- ^ 
+  , addressQuarter :: Text -- ^ 
+  , addressHamlet :: Text -- ^ 
+  , addressSuburb :: Text -- ^ 
+  , addressIsland :: Text -- ^ 
   , addressVillage :: Text -- ^ 
+  , addressTown :: Text -- ^ 
+  , addressCity :: Text -- ^ 
+  , addressCityUnderscoredistrict :: Text -- ^ 
   , addressCounty :: Text -- ^ 
   , addressState :: Text -- ^ 
+  , addressStateUnderscoredistrict :: Text -- ^ 
   , addressPostcode :: Text -- ^ 
   , addressCountry :: Text -- ^ 
   , addressCountryUnderscorecode :: Text -- ^ 
-  , addressCity :: Text -- ^ 
+  , addressStateUnderscorecode :: Text -- ^ 
   } deriving (Show, Eq, Generic)
 
 instance FromJSON Address where
@@ -55,6 +65,7 @@ instance ToJSON Balance where
 -- | 
 data Daybalance = Daybalance
   { daybalanceDay :: Int -- ^ 
+  , daybalanceBonus :: Int -- ^ 
   } deriving (Show, Eq, Generic)
 
 instance FromJSON Daybalance where

@@ -65,8 +65,8 @@ lookupEither key assocs =
 -- | Servant type-level API, generated from the OpenAPI spec for LocationIQ.
 type LocationIQAPI
     =    "balance.php" :> Verb 'GET 200 '[JSON] Balance -- 'balance' route
-    :<|> "reverse.php" :> QueryParam "lat" Double :> QueryParam "lon" Double :> QueryParam "format" Text :> QueryParam "normalizecity" Int :> QueryParam "addressdetails" Int :> QueryParam "accept-language" Text :> QueryParam "namedetails" Int :> QueryParam "extratags" Int :> Verb 'GET 200 '[JSON] Location -- 'reverse' route
-    :<|> "search.php" :> QueryParam "q" Text :> QueryParam "format" Text :> QueryParam "normalizecity" Int :> QueryParam "addressdetails" Int :> QueryParam "viewbox" Text :> QueryParam "bounded" Int :> QueryParam "limit" Int :> QueryParam "accept-language" Text :> QueryParam "countrycodes" Text :> QueryParam "namedetails" Int :> QueryParam "dedupe" Int :> QueryParam "extratags" Int :> Verb 'GET 200 '[JSON] [Location] -- 'search' route
+    :<|> "reverse.php" :> QueryParam "lat" Double :> QueryParam "lon" Double :> QueryParam "format" Text :> QueryParam "normalizecity" Int :> QueryParam "addressdetails" Int :> QueryParam "accept-language" Text :> QueryParam "namedetails" Int :> QueryParam "extratags" Int :> QueryParam "statecode" Int :> Verb 'GET 200 '[JSON] Location -- 'reverse' route
+    :<|> "search.php" :> QueryParam "q" Text :> QueryParam "format" Text :> QueryParam "normalizecity" Int :> QueryParam "addressdetails" Int :> QueryParam "viewbox" Text :> QueryParam "bounded" Int :> QueryParam "limit" Int :> QueryParam "accept-language" Text :> QueryParam "countrycodes" Text :> QueryParam "namedetails" Int :> QueryParam "dedupe" Int :> QueryParam "extratags" Int :> QueryParam "statecode" Int :> Verb 'GET 200 '[JSON] [Location] -- 'search' route
 
 -- | Server or client configuration, specifying the host and port to query or serve on.
 data ServerConfig = ServerConfig
@@ -130,8 +130,8 @@ formatSeparatedQueryList char = T.intercalate (T.singleton char) . map toQueryPa
 -- a backend, the API can be served using @runLocationIQServer@.
 data LocationIQBackend m = LocationIQBackend
   { balance :: m Balance{- ^ The Balance API provides a count of request credits left in the user's account for the day. Balance is reset at midnight UTC everyday (00:00 UTC). -}
-  , reverse :: Maybe Double -> Maybe Double -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Int -> Maybe Int -> m Location{- ^ Reverse geocoding is the process of converting a coordinate or location (latitude, longitude) to a readable address or place name. This permits the identification of nearby street addresses, places, and/or area subdivisions such as a neighborhood, county, state, or country. -}
-  , search :: Maybe Text -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Int -> m [Location]{- ^ The Search API allows converting addresses, such as a street address, into geographic coordinates (latitude and longitude). These coordinates can serve various use-cases, from placing markers on a map to helping algorithms determine nearby bus stops. This process is also known as Forward Geocoding. -}
+  , reverse :: Maybe Double -> Maybe Double -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Int -> m Location{- ^ Reverse geocoding is the process of converting a coordinate or location (latitude, longitude) to a readable address or place name. This permits the identification of nearby street addresses, places, and/or area subdivisions such as a neighborhood, county, state, or country. -}
+  , search :: Maybe Text -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Text -> Maybe Text -> Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int -> m [Location]{- ^ The Search API allows converting addresses, such as a street address, into geographic coordinates (latitude and longitude). These coordinates can serve various use-cases, from placing markers on a map to helping algorithms determine nearby bus stops. This process is also known as Forward Geocoding. -}
   }
 
 newtype LocationIQClient a = LocationIQClient
